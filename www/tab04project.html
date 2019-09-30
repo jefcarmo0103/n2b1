@@ -7,7 +7,7 @@
     <script src="js/bootstrap.bundle.js"></script>-->
     <title>FTT EC LP2 N1!!</title>
     <LINK REL="stylesheet" HREF="css/bootstrap.css" />
-    <STYLE>
+      <STYLE>
         .center-txt {
             text-align: center;
             color: black;
@@ -67,11 +67,10 @@
             </div>
         </div>
     </nav>
-
     <main class="container" id="aluno">
-        <hr>
-        <h1><span class="badge badge-success">Projeto do aluno!!</span></h1>
-        <p><a href="https://github.com/public-apis/public-apis" target="_apis">Lista de APIs públicas</a></p>
+        <div id="showWeatherForecast"></div>
+
+        
     </main>
 
     <nav class="navbar fixed-bottom navbar-light bg-light width-button-bar">
@@ -88,8 +87,36 @@
     </nav>
 </BODY>
 <!-- carga de scripts do Bootstrap, JQuery, Popper -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="js/jquery.js"></script>
+<script crossorigin="anonymous">
+    
+    $(document).ready(function(){
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1); //January is 0!
+        var yyyy = today.getFullYear();
 
+        console.log(mm);
+        console.log(dd);
+
+
+            $.ajax({
+                url:'https://api.bitcointrade.com.br/v2/public/BRLBTC/ticker',
+                datatype:'json',
+                type:'GET',
+
+                success: function (data){
+                    var wf = '';
+                    wf += '<p><b>Data da pesquisa. (DATE - formato UTC): ' + data.data.date + "</b></p>"+ '<p><b>Valor unitário da melhor oferta de venda atual no book de ofertas: ' + data.data.sell + "</b></p>"+
+                    '<p><b>Valor unitário da melhor oferta de compra atual no book de ofertas: ' + data.data.buy + "</b></p>"+ '<p><b>Menor valor de negociação nas últimas 24 horas: ' + data.data.low + "</b></p>"+ '<p><b>Maior valor de negociação nas últimas 24 horas: ' + data.data.high + "</b></p>"+
+                    '<p><b>Quantidade negociada nas últimas 24 horas para a cripto moeda: ' + data.data.volume + "</b></p>"+ '<p><b>Quantidade de trades realizados nas últimas 24 horas para a cripto moeda: ' + data.data.trades_quantity + "</b></p>"
+                    
+                    $("#showWeatherForecast").html(wf);
+
+                }
+
+            });
+        });
+                
+    </script>
 </HTML>
